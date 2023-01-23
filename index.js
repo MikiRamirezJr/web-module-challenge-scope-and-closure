@@ -30,11 +30,11 @@ console.log('example task:', processFirstItem(['foo','bar'],function(str){return
   Study the code for counter1 and counter2, then answer the questions below.
   
   1. What is the difference between counter1 and counter2?
-  
+  For counter1 only the function counterMaker is on the global scope. counterMaker() created the first closure, meaning you can't access count which is inside the function scope. A nested closure is return function counter(). counter2 has no nested closures because count is defined on the global scope. 
   2. Which of the two uses a closure? How can you tell?
-  
+  counter1 code does, when return function counter() was invoked, it created a closure.
   3. In what scenario would the counter1 code be preferable? In what scenario would 
-     counter2 be better?  
+     counter2 be better?  counter1 would be better if you wanted the count to increase. counter2 would be better if you wanted the count to set at 0 everytime.
 */
 
 // counter1 code
@@ -64,9 +64,10 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
-    /*Code Here*/
+function inning(myMin, myMax){
+    return Math.floor(Math.random()*(myMax - myMin + 1)) + myMin;
 }
+console.log(inning(0, 2));
 
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
@@ -83,10 +84,20 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*Code Here*/){
-  /*Code Here*/
+function finalScore(inning, innings){
+  let homeScore = 0;
+  let awayScore = 0;
+  for(let i = 0; i < innings; i++) {
+    let score = inning(0,2);
+    homeScore += score;
+    awayScore += (2 - score);
+  }
+  return {
+    'Home': homeScore,
+    'Away': awayScore,
+  };
 }
-
+console.log(finalScore(inning, 9))
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
 Use the getInningScore() function below to do the following:
@@ -101,11 +112,14 @@ For example: invoking getInningScore(inning) might return this object:
   */
 
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
-
+function getInningScore(inning) {
+  let score = inning(0,2);
+  return {
+    'Home': score,
+    'Away': (2 - score)
+  };
 }
-
+console.log(getInningScore(inning));
 
 /* STRETCH: ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
 Use the scoreboard function below to do the following:
